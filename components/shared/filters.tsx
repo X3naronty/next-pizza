@@ -1,12 +1,19 @@
+'use client';
+
 import React from 'react';
 import { CheckboxFiltersGroup, FilterCheckbox, RangeSlider, Title } from '.';
 import { Input } from '../ui';
+import { useFilterIngredients } from '@/hooks/useFilterIngredients';
 
 interface Props {
   className?: string;
 }
 	
 export const Filters: React.FC<Props> = ({ className }) => {
+  const {ingredients} = useFilterIngredients();
+  
+  const items = ingredients.map((item) => ({value: String(item.id), text: item.name}));
+
   return (
     <div className={className}>
       <Title text="Filter" size="sm" className="mb-5 font-bold" />
@@ -37,62 +44,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
         title="Ingredients"
         className="mt-5"
         limit={6}
-        defaultItems={[
-          {
-            text: 'Cheese sauce',
-            value: '1',
-          },
-          {
-            text: 'Mozzarella',
-            value: '2',
-          },
-          {
-            text: 'garlic',
-            value: '3',
-          },
-          {
-            text: 'pickles',
-            value: '4',
-          },
-          {
-            text: 'red onion',
-            value: '5',
-          },
-          {
-            text: 'tomatoes',
-            value: '6',
-          },
-        ]}
-        items={[
-          {
-            text: 'Cheese sauce',
-            value: '1',
-          },
-          {
-            text: 'Mozzarella',
-            value: '2',
-          },
-          {
-            text: 'garlic',
-            value: '3',
-          },
-          {
-            text: 'pickles',
-            value: '4',
-          },
-          {
-            text: 'red onion',
-            value: '5',
-          },
-          {
-            text: 'tomatoes',
-            value: '6',
-          },
-          {
-            text: 'Mushrooms',
-            value: '7',
-          },
-        ]}
+        defaultItems={items.slice(0, 6)}
+        items={items}
       />
     </div>
   );
